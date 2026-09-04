@@ -1,0 +1,28 @@
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="container">
+	<h5 class="my-3 border-bottom pb-2">질문등록</h5>
+	<!-- th:object: <form>에서 사용할 객체를 지정 -->
+	<!-- action이 없어도 method="post"는 현재 URL로 POST 요청을 보냄 -->
+	<form th:object="${questionForm}" method="post">
+		<!-- hidden: 화면에 보이지 않음 / name: CSRF 전송 이름 / value: CSRF 전송 값 -->
+		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+		<!-- th:replace: 현재 태그를 form_errors.html의 formErrorsFragment로 교체 -->
+		<div th:replace="~{form_errors :: formErrorsFragment}"></div>
+		<div class="mb-3">
+			<!-- for="subject" : id="subject"인 입력칸과 연결 -->
+			<!-- label과 input이 연결되면 제목을 클릭했을 때 입력칸에 커서가 들어감 -->
+			<label for="subject" class="form-label">제목</label>
+			<!-- *{}: th:object로 지정한 객체의 속성에 접근 -->
+			<!-- th:field="*{subject}" = id="subject" + name="subject" -->
+			<!-- name: 서버 전송용 이름 / id: HTML 구분용 이름 -->
+			<input type="text" th:field="*{subject}" class="form-control">
+		</div>
+		<div class="mb-3">
+			<label for="content" class="form-label">내용</label>
+			<textarea th:field="*{content}" class="form-control" rows="10"></textarea>
+		</div>
+		<input type="submit" value="저장하기" class="btn btn-primary my-2">
+	</form>
+</div>
+
+</html>

@@ -1,0 +1,9 @@
+/* width: 100% : 바깥 요소의 너비만큼 꽉 채움 */
+textarea {
+    width: 100%;
+}
+
+/* margin-top: 10px : 위쪽 바깥 여백을 10px로 설정 */
+input[type=submit] {
+    margin-top: 10px;
+}

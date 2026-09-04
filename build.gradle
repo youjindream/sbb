@@ -1,0 +1,38 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.2.1'
+	id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'com.mysite'
+version = '0.0.2'
+
+java {
+	sourceCompatibility = '17'
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools' //서버를 재시작하지 않아도 클래스를 변경할 때 서버가 자동으로 재가동된다
+	compileOnly 'org.projectlombok:lombok' // @Getter, @Setter 같은 애너테이션을 사용하면... 
+    annotationProcessor 'org.projectlombok:lombok' // Getter와 Setter 메서드를 자동으로 만들어준다
+    runtimeOnly 'com.h2database:h2'  // 자바 기반의 경량 DBMS
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'  // JPA를 사용
+    testImplementation 'org.junit.jupiter:junit-jupiter' // JUnit 설치하기(테스트)
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher' // testRuntimeOnly: 해당 라이브러리가 테스트 실행 시에만 사용됨
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf' // 자바 데이터와 HTML을 연결
+    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect' // layout.html의 공통 화면 구조를 재사용
+    implementation 'org.springframework.boot:spring-boot-starter-validation' // 입력값 검증 기능 ex) 제목은 필수항목입니다.
+    implementation 'org.springframework.boot:spring-boot-starter-security' // 로그인·로그아웃 및 사용자 인증·권한 관리
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6' // 로그인 여부와 권한에 따라 HTML 화면을 다르게 표시
+    implementation 'org.commonmark:commonmark:0.21.0' // 마크다운 문법을 HTML로 변환하기 위한 라이브러리
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

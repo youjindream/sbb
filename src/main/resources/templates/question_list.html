@@ -1,0 +1,61 @@
+<!-- layout.html 템플릿을 상속 -->
+<html layout:decorate="~{layout}">
+<!-- layout:fragment="content": 이 영역을 layout.html의 content 자리에 넣음 -->
+<!-- class : 클래스 이름을 적는 HTML 속성 / container, my-3는 부트스트랩 클래스 -->
+<div layout:fragment="content" class="container my-3">
+	<table class="table">
+		<thead class="table-dark">
+			<tr class="text-center">
+				<th>번호</th>
+				<th style="width:50%">제목</th>
+				<th>글쓴이</th>
+				<th>작성일시</th>
+			</tr>
+		</thead>
+		<tbody>
+			<!-- th: 타임리프 표시 / th:each : 값을 하나씩 꺼내 반복 / ${...}: model 데이터 꺼내기 -->
+			<!-- question: 현재 꺼낸 데이터 / loop : 반복 상태 객체(몇 번째) -->
+			<tr class="text-center" th:each="question, loop : ${paging}">
+				<!-- 게시물 번호 = 전체 게시물 개수 - (현재 페이지 * 페이지당 게시물 개수) - 나열 인덱스 -->
+				<!-- loop.index : 0부터 시작 / loop.count : 1부터 시작 -->
+				<td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
+				<!-- th:href : 이동할 URL 주소를 지정하는 속성 / th:text : 태그 안에 글자를 넣는 속성 -->
+				<!-- URL은 반드시 @{ } 안에 입력 / | |: 문자열과 변수 값을 이어 붙이는 문법 -->
+				<!-- span : 답변이 있을 때 답변 개수 표시 -->
+				<td class="text-start">
+					<a th:href="@{|/question/detail/${question.id}|}" th:text="${question.subject}"></a>
+					<span class="text-danger small ms-2" th:if="${#lists.size(question.answerList) > 0}"
+						th:text="${#lists.size(question.answerList)}">
+					</span>
+				</td>
+				<td><span th:if="${question.author != null}" th:text="${question.author.username}"></span></td>
+				<!-- #temporals.format(날짜·시간 값, '출력 형식'): 날짜와 시간을 원하는 형식의 문자열로 변환 -->
+				<td th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd HH:mm')}"></td>
+			</tr>
+		</tbody>
+	</table>
+	<!-- 페이징처리 시작 -->
+	<div th:if="${!paging.isEmpty()}">
+		<ul class="pagination justify-content-center">
+			<li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
+				<a class="page-link" th:href="@{|?page=${paging.number-1}|}">
+					<span>이전</span>
+				</a>
+			</li>
+			<li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
+				th:if="${page >= paging.number-5 and page <= paging.number+5}"
+				th:classappend="${page == paging.number} ? 'active'" class="page-item">
+				<a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
+			</li>
+			<li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
+				<a class="page-link" th:href="@{|?page=${paging.number+1}|}">
+					<span>다음</span>
+				</a>
+			</li>
+		</ul>
+	</div>
+	<!-- 페이징처리 끝 -->
+	<a th:href="@{/question/create}" class="btn btn-primary">질문 등록하기</a>
+</div>
+
+</html>

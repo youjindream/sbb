@@ -1,0 +1,6 @@
+<!-- th:fragment="formErrorsFragment" : 다른 템플릿에서 사용할 수 있도록 이름을 설정한 것 -->
+<div th:fragment="formErrorsFragment" class="alert alert-danger" 
+    role="alert" th:if="${#fields.hasAnyErrors()}">
+    <!-- #fields: th:object로 지정한 폼 객체의 필드 상태 확인 / allErrors(): 모든 오류를 가져오기 -->
+    <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+</div>
