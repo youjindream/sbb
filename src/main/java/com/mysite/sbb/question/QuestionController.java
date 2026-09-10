@@ -32,9 +32,10 @@ public class QuestionController {
 	private final UserService userService;
 	
 	@GetMapping("/list")
-	public String list(Model model, @RequestParam(value="page", defaultValue="0")int page) { // @RequestParam : URL의 ?이름=값에서 값을 꺼내 메서드의 매개변수에 저장해 주는 애너테이션
-		Page<Question> paging = this.questionService.getList(page); // Page는 Spring Data에서 제공하는 인터페이스(import 되어있음)
+	public String list(Model model, @RequestParam(value="page", defaultValue="0")int page, @RequestParam(value = "kw", defaultValue = "") String kw) { // @RequestParam : URL의 ?이름=값에서 값을 꺼내 메서드의 매개변수에 저장해 주는 애너테이션
+		Page<Question> paging = this.questionService.getList(page, kw); // Page는 Spring Data에서 제공하는 인터페이스(import 되어있음)
 		model.addAttribute("paging", paging); // Model 객체에 속성을 추가, addAttribute("이름", 전달할 데이터); 
+		model.addAttribute("kw", kw);
 		return "question_list"; // question_list.html 템플릿에 Model 값을 넘겨 화면에 표시
 	}
 	

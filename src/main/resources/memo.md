@@ -120,7 +120,7 @@ Integer, String, Question 전부 대문자
 // : 자바, 자바스크립트 등에서 한 줄 주석
  # : application.properties에서 주석 / Markdown에서 제목
 <!-- --> : HTML 주석
-/* */ : CSS에서 주석
+/* */ : CSS에서 주석, 자바 여러줄 주석
 
 # 단축키 모음
 Ctrl + Space: 작성 중인 코드·애너테이션 자동완성

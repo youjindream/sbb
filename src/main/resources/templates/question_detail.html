@@ -80,7 +80,7 @@
 	<!-- th:action: 데이터를 전송할 URL 지정 / method: 전송 방식 / post: 입력값을 서버로 전송 -->
 	<form th:action="@{|/answer/create/${question.id}|}" th:object="${answerForm}" method="post" class="my-3">
 		<div th:replace="~{form_errors :: formErrorsFragment}"></div>
-		<!-- disabled: 비활성화, rows: 높이, cols: 너비 -->
+		<!-- disabled: 비활성화, rows: 높이(row 가로랑 다름), cols: 너비 -->
 		<textarea sec:authorize="isAnonymous()" disabled th:field="*{content}" class="form-control"
 			rows="10"></textarea>
 		<textarea sec:authorize="isAuthenticated()" th:field="*{content}" class="form-control" rows="10"></textarea>
